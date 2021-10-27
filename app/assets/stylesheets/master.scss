@@ -1,1 +1,29 @@
 @import "bootstrap/scss/bootstrap";
+
+body {
+  background: linear-gradient(to right, rgb(49, 114, 60), #202020, rgb(49, 114, 60));
+  font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+}
+
+.container {
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.box {
+  padding: 10px;
+  border: 2px solid;
+  border-color: #00C122;
+  border-radius: 10px;
+}
+
+.green {
+  color: #00C122;
+}
