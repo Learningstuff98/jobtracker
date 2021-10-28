@@ -7,7 +7,11 @@ class ApplicationsController < ApplicationController
 
   def create
     @application = current_user.applications.create(application_params)
-    redirect_to application_path(@application)
+    if @application.valid?
+      redirect_to application_path(@application)
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def show
