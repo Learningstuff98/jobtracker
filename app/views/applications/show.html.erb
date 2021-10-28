@@ -10,5 +10,10 @@
   <% if @application.remote %>
     <h3 class="green">This job is remote</h3>
   <% end %>
-  <h3><%= link_to "Back to home", root_path, class: "green" %></h3>
+  <br/>
+  <h3>
+    <%= link_to "Delete", application_path(@application), method: :delete, data: { confirm: "Are you sure?" }, class: "green" %>
+    <br/>
+    <%= link_to "Back to home", root_path, class: "green" %>
+  </h3>
 </div>
