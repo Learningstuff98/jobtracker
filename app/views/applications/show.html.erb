@@ -12,6 +12,8 @@
   <% end %>
   <br/>
   <h3>
+    <%= link_to "Edit", edit_application_path(@application), class: "green" %>
+    <br/>
     <%= link_to "Delete", application_path(@application), method: :delete, data: { confirm: "Are you sure?" }, class: "green" %>
     <br/>
     <%= link_to "Back to home", root_path, class: "green" %>
