@@ -1,7 +1,14 @@
-<h2 class="green">
-  <%= @application.company_name %>
-  <br/>
-  <%= @application.job_title %>
-  <br/><br/>
-  <%= link_to "Back to home", root_path, class: "green" %>
-</h2>
+<div class="application-content green">
+  <h2>
+    <%= @application.company_name %>
+    <br/>
+    <%= @application.job_title %>
+  </h2>
+  <% if @application.tech_job %>
+    <h3 class="green">This is a tech job</h3>
+  <% end %>
+  <% if @application.remote %>
+    <h3 class="green">This job is remote</h3>
+  <% end %>
+  <h3><%= link_to "Back to home", root_path, class: "green" %></h3>
+</div>
