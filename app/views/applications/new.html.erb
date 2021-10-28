@@ -1,0 +1,16 @@
+<div class="container green">
+  <div class="box text-center col-8">
+    <h2 class="green">Job Info</h2>
+    <br/>
+    <%= simple_form_for @application, url: applications_path do |f| %>
+      <h3><%= f.input :company_name %></h3>
+      <br/>
+      <h3><%= f.input :job_title %></h3>
+      <br/>
+      <h4 class="green"><%= f.input :tech_job, as: :boolean %></h4>
+      <h4 class="green"><%= f.input :remote, as: :boolean %></h4>
+      <br/>
+      <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
