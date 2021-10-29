@@ -10,6 +10,9 @@
   <% if @application.remote %>
     <h3 class="green">This job is remote</h3>
   <% end %>
+  <h4 class="col-6">
+    <%= @application.content %>
+  </h4>
   <br/>
   <h3>
     <%= link_to "Edit", edit_application_path(@application), class: "green" %>
