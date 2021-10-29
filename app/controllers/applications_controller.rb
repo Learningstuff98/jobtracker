@@ -41,7 +41,7 @@ class ApplicationsController < ApplicationController
   private
 
   def application_params
-    params.require(:application).permit(:company_name, :job_title, :tech_job, :remote)
+    params.require(:application).permit(:company_name, :job_title, :tech_job, :remote, :content)
   end
 
 end

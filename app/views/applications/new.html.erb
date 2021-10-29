@@ -10,6 +10,10 @@
       <h4 class="green"><%= f.input :tech_job, as: :boolean %></h4>
       <h4 class="green"><%= f.input :remote, as: :boolean %></h4>
       <br/>
+      <div class="application-notes-input">
+        <%= f.rich_text_area :content %>
+      </div>
+      <br/>
       <%= f.submit 'Submit', class: 'btn btn-primary' %>
     <% end %>
   </div>
