@@ -15,7 +15,7 @@
 <br/><br/>
 
 <% if current_user %>
-  <% current_user.applications.each do |application| %>
+  <% @applications.each do |application| %>
     <h3 class="text-center">
       <%= link_to "#{application.job_title} at #{application.company_name}", application_path(application), class: "green" %>
     </h3>
