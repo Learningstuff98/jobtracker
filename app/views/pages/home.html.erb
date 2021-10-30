@@ -14,6 +14,16 @@
 
 <br/><br/>
 
+<div class="text-center green">
+  <%= form_tag(root_path, method: "get") do %>
+    <h3>Search for an application</h3>
+    <%= text_field_tag(:keyword, nil, placeholder: 'company name') %>
+    <%= submit_tag("Search") %>
+  <% end %>
+</div>
+
+<br/>
+
 <% if current_user %>
   <% @applications.each do |application| %>
     <h3 class="text-center">
