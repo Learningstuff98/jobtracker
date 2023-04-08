@@ -1,5 +1,9 @@
 class ApplicationsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: %i[new create show edit update destroy]
+
+  def index
+    @applications = current_user.search(params[:keyword]) if current_user
+  end
 
   def new
     @application = Application.new
