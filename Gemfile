@@ -37,6 +37,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # For linting
   gem 'rubocop-rails', require: false
+  # Framework for testing
+  gem 'rspec-rails', '~> 6.0.0'
 end
 
 group :development do
