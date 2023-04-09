@@ -39,6 +39,8 @@ group :development, :test do
   gem 'rubocop-rails', require: false
   # Framework for testing
   gem 'rspec-rails', '~> 6.0.0'
+  # For making dummy instances for testing
+  gem 'factory_bot_rails'
 end
 
 group :development do

@@ -7,4 +7,18 @@ RSpec.describe "Applications", type: :request do
       expect(response).to be_successful
     end
   end
+
+  context "while logged in" do
+    before do
+      user = FactoryBot.create(:user)
+      sign_in(user)
+    end
+
+    describe "GET #new" do
+      it "loads the page" do
+        get new_application_path
+        expect(response).to be_successful
+      end
+    end
+  end
 end
