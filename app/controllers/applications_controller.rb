@@ -1,15 +1,15 @@
 class ApplicationsController < ApplicationController
   before_action :authenticate_user!, only: %i[new create show edit update destroy]
 
-  def index
+  def index # DONE
     @applications = current_user.search(params[:keyword]) if current_user
   end
 
-  def new
+  def new # DONE
     @application = Application.new
   end
 
-  def create
+  def create # DONE
     @application = current_user.applications.create(application_params)
     if @application.save
       redirect_to application_path(@application)
@@ -18,11 +18,11 @@ class ApplicationsController < ApplicationController
     end
   end
 
-  def show
+  def show # DONE
     @application = Application.find(params[:id])
   end
 
-  def destroy
+  def destroy # CURRENT
     application = Application.find(params[:id])
     application.destroy
     redirect_to root_path
