@@ -22,17 +22,17 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
   end
 
-  def destroy # CURRENT
-    application = Application.find(params[:id])
-    application.destroy
+  def destroy # DONE
+    @application = Application.find(params[:id])
+    @application.destroy
     redirect_to root_path
   end
 
-  def edit
+  def edit # DONE
     @application = Application.find(params[:id])
   end
 
-  def update
+  def update # NEXT
     @application = Application.find(params[:id])
     if @application.update(application_params)
       redirect_to application_path(@application)

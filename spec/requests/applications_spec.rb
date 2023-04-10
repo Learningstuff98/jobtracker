@@ -49,5 +49,20 @@ RSpec.describe "Applications", type: :request do
         expect(response).to be_successful
       end
     end
+
+    describe "DELETE #destroy" do
+      it "deletes job applications", :aggregate_failures do
+        delete application_path(FactoryBot.create(:application))
+        expect(response).to have_http_status(:found)
+        expect(Application.count).to eq 0
+      end
+    end
+
+    describe "GET #edit" do
+      it "loads the page" do
+        get edit_application_path(FactoryBot.create(:application))
+        expect(response).to be_successful
+      end
+    end
   end
 end
