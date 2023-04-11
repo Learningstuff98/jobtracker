@@ -64,5 +64,27 @@ RSpec.describe "Applications", type: :request do
         expect(response).to be_successful
       end
     end
+
+    describe "PATCH #update" do
+      it "updates job applications", :aggregate_failures do
+        application = FactoryBot.create(:application)
+        patch application_path(
+          id: application.id,
+          application: {
+            company_name: "new name",
+            job_title: "new title",
+            content: "new relevent info",
+            tech_job: false,
+            remote: false
+          }
+        )
+        expect(response).to have_http_status(:found)
+        application = Application.first
+        expect(application.company_name).to eq "new name"
+        expect(application.job_title).to eq "new title"
+        expect(application.tech_job).to eq false
+        expect(application.remote).to eq false
+      end
+    end
   end
 end
