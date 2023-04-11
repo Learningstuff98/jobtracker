@@ -41,6 +41,18 @@ RSpec.describe "Applications", type: :request do
         expect(application.tech_job).to eq true
         expect(application.remote).to eq true
       end
+
+      it "doesn't allow for the creation of invalid job applications", :aggregate_failures do
+        post applications_path(
+          user_id: @user.id,
+          application: {
+            company_name: "",
+            job_title: ""
+          }
+        )
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(Application.count).to eq 0
+      end
     end
 
     describe "GET #show" do
@@ -84,6 +96,21 @@ RSpec.describe "Applications", type: :request do
         expect(application.job_title).to eq "new title"
         expect(application.tech_job).to eq false
         expect(application.remote).to eq false
+      end
+
+      it "doesn't allow for the updating of invalid job applications", :aggregate_failures do
+        application = FactoryBot.create(:application)
+        patch application_path(
+          id: application.id,
+          application: {
+            company_name: "",
+            job_title: ""
+          }
+        )
+        expect(response).to have_http_status(:unprocessable_entity)
+        application = Application.first
+        expect(application.company_name).to eq "a company"
+        expect(application.job_title).to eq "software engineer"
       end
     end
   end
