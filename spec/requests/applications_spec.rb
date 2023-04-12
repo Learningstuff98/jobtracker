@@ -8,6 +8,54 @@ RSpec.describe "Applications", type: :request do
     end
   end
 
+  context "while logged in as a different user" do
+    before do
+      @user = FactoryBot.create(:user)
+      @application = FactoryBot.create(:application)
+      @user.applications.push(@application)
+      @user2 = FactoryBot.create(:user)
+      sign_in(@user2)
+    end
+
+    describe "GET #show" do
+      it "doesn't allow access to foreign users" do
+        get application_path(@application)
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    describe "DELETE #destroy" do
+      it "doesn't let foreign users delete job applications", :aggregate_failures do
+        delete application_path(@application)
+        expect(response).to have_http_status(:forbidden)
+        expect(Application.count).to eq 1
+      end
+    end
+
+    describe "GET #edit" do
+      it "doesn't allow access to foreign users" do
+        get edit_application_path(@application)
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    describe "PATCH #update" do
+      it "doesn't let foreign users update job applications", :aggregate_failures do
+        patch application_path(
+          id: @application.id,
+          application: {
+            company_name: "some troll name",
+            job_title: "some troll title"
+          }
+        )
+        expect(response).to have_http_status(:forbidden)
+        application = Application.first
+        expect(application.company_name).to eq "a company"
+        expect(application.job_title).to eq "software engineer"
+      end
+    end
+  end
+
   context "while logged in" do
     before do
       @user = FactoryBot.create(:user)
