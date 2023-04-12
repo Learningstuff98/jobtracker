@@ -105,14 +105,18 @@ RSpec.describe "Applications", type: :request do
 
     describe "GET #show" do
       it "loads the page" do
-        get application_path(FactoryBot.create(:application))
+        application = FactoryBot.create(:application)
+        @user.applications.push(application)
+        get application_path(application)
         expect(response).to be_successful
       end
     end
 
     describe "DELETE #destroy" do
       it "deletes job applications", :aggregate_failures do
-        delete application_path(FactoryBot.create(:application))
+        application = FactoryBot.create(:application)
+        @user.applications.push(application)
+        delete application_path(application)
         expect(response).to have_http_status(:found)
         expect(Application.count).to eq 0
       end
@@ -120,7 +124,9 @@ RSpec.describe "Applications", type: :request do
 
     describe "GET #edit" do
       it "loads the page" do
-        get edit_application_path(FactoryBot.create(:application))
+        application = FactoryBot.create(:application)
+        @user.applications.push(application)
+        get edit_application_path(application)
         expect(response).to be_successful
       end
     end
@@ -128,6 +134,7 @@ RSpec.describe "Applications", type: :request do
     describe "PATCH #update" do
       it "updates job applications", :aggregate_failures do
         application = FactoryBot.create(:application)
+        @user.applications.push(application)
         patch application_path(
           id: application.id,
           application: {
@@ -148,6 +155,7 @@ RSpec.describe "Applications", type: :request do
 
       it "doesn't allow for the updating of invalid job applications", :aggregate_failures do
         application = FactoryBot.create(:application)
+        @user.applications.push(application)
         patch application_path(
           id: application.id,
           application: {
