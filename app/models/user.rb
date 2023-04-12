@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   def search(keyword)
     if keyword.present?
-      Application.where("company_name ILIKE ?", "%#{keyword}%")
+      applications.where("company_name ILIKE ?", "%#{keyword}%")
     else
       applications.order("created_at DESC")
     end
