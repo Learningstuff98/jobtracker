@@ -8,7 +8,7 @@ FactoryBot.define do
   end
 
   factory :application do
-    association :user
+    user_id { User.first.id }
     company_name { "a company" }
     job_title { "software engineer" }
     content { "relevent info" }
