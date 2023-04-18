@@ -15,7 +15,7 @@ AllCops:
     - 'spec/factories.rb'
 
 Metrics/BlockLength:
-  IgnoredMethods: ['describe', 'context']
+  IgnoredMethods: ['describe', 'context', 'it']
 
 StringLiterals:
   Enabled: false

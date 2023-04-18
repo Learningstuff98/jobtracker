@@ -37,5 +37,43 @@ RSpec.describe "Applications CRUD operations", type: :system do
       expect(page).not_to have_content "This is a tech job"
       expect(page).not_to have_content "This job is remote"
     end
+
+    it "can use the search functionality", :aggregate_failures do
+      FactoryBot.create(:application, company_name: "company 2")
+      FactoryBot.create(:application, company_name: "company 3")
+      visit root_path
+
+      expect(page).to have_content "a company"
+      expect(page).to have_content "company 2"
+      expect(page).to have_content "company 3"
+
+      fill_in("company name", with: "2")
+      click_on "Search"
+
+      expect(page).to have_content "company 2"
+      expect(page).not_to have_content "company 3"
+      expect(page).not_to have_content "a company"
+
+      fill_in("company name", with: "3")
+      click_on "Search"
+
+      expect(page).to have_content "company 3"
+      expect(page).not_to have_content "company 2"
+      expect(page).not_to have_content "a company"
+
+      fill_in("company name", with: "a co")
+      click_on "Search"
+
+      expect(page).to have_content "a company"
+      expect(page).not_to have_content "company 2"
+      expect(page).not_to have_content "company 3"
+
+      fill_in("company name", with: "")
+      click_on "Search"
+
+      expect(page).to have_content "a company"
+      expect(page).to have_content "company 2"
+      expect(page).to have_content "company 3"
+    end
   end
 end
