@@ -15,12 +15,14 @@ RSpec.describe "Applications CRUD operations", type: :system do
       fill_in("Job title", with: "software engineer")
       check "Tech job"
       check "Remote"
+      find(".trix-content").set("some relevent info")
       click_on "Submit"
 
       expect(page).to have_content "some company name"
       expect(page).to have_content "software engineer"
       expect(page).to have_content "This is a tech job"
       expect(page).to have_content "This job is remote"
+      expect(page).to have_content "some relevent info"
     end
 
     it "can make edits to job applications", :aggregate_failures do
@@ -30,12 +32,15 @@ RSpec.describe "Applications CRUD operations", type: :system do
       fill_in("Job title", with: "senior garbage disposal specialist")
       uncheck "Tech job"
       uncheck "Remote"
+      find(".trix-content").set("UPDATED NOTES")
       click_on "Update"
 
       expect(page).to have_content "a different company"
       expect(page).to have_content "senior garbage disposal specialist"
       expect(page).not_to have_content "This is a tech job"
       expect(page).not_to have_content "This job is remote"
+      expect(page).to have_content "UPDATED NOTES"
+      expect(page).not_to have_content "relevent info"
     end
 
     it "can use the search functionality", :aggregate_failures do
