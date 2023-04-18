@@ -75,5 +75,15 @@ RSpec.describe "Applications CRUD operations", type: :system do
       expect(page).to have_content "company 2"
       expect(page).to have_content "company 3"
     end
+
+    it "can delete job applications", :aggregate_failures do
+      visit application_path(@application)
+      accept_confirm do
+        click_on "Delete"
+      end
+      expect(page).to have_content "Search for an application"
+      expect(page).not_to have_content "a company"
+      expect(page).not_to have_content "software engineer"
+    end
   end
 end
