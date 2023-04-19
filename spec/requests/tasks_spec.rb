@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Tasks", type: :request do
-  context "when logged in" do
+  context "while logged in" do
     before do
       @user = FactoryBot.create(:user)
       sign_in(@user)
@@ -47,6 +47,15 @@ RSpec.describe "Tasks", type: :request do
         task = FactoryBot.create(:task)
         get task_path(task)
         expect(response).to be_successful
+      end
+    end
+
+    describe "DELETE #destroy" do
+      it "deletes tasks" do
+        task = FactoryBot.create(:task)
+        delete task_path(task)
+        expect(response).to have_http_status(:found)
+        expect(Task.count).to eq 0
       end
     end
   end
