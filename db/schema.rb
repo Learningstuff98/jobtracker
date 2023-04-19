@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 2023_04_19_002541) do
     t.string "date", default: "", null: false
     t.string "time", default: "", null: false
     t.string "location", default: "", null: false
+    t.string "status", default: "incomplete", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_tasks_on_user_id"

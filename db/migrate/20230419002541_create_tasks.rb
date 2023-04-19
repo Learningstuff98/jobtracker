@@ -6,6 +6,7 @@ class CreateTasks < ActiveRecord::Migration[6.1]
       t.string :date, null: false, default: ""
       t.string :time, null: false, default: ""
       t.string :location, null: false, default: ""
+      t.string :status, null: false, default: "incomplete"
       t.timestamps
     end
     add_index :tasks, :user_id
