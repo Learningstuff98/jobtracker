@@ -1,0 +1,9 @@
+<div class="page-content">
+  <h3><%= link_to "Home", root_path, class: "green" %></h3>
+  <h3><%= link_to "Add a new task", new_task_path, class: "green" %></h3>
+  <br/>
+  <% @tasks.each do |task| %>
+    <h3><%= link_to task.title, task_path(task), class: "green" %></h3>
+    <br/>
+  <% end %>
+</div>

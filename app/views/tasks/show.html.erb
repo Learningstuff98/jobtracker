@@ -1,0 +1,18 @@
+<div class="page-content green">
+  <h2>
+    <%= @task.title %>
+    <br/>
+    <%= "Date: #{@task.date}" %>
+    <br/>
+    <%= "Time: #{@task.time}" %>
+    <br/>
+    <%= "Location: #{@task.location}" %>
+    <br/>
+  </h2>
+  <h4 class="col-6">
+    <%= @task.content %>
+  </h4>
+  <br/>
+  <h3><%= link_to "See tasks", tasks_path, class: "green" %></h3>
+  <h3><%= link_to "Back to home", root_path, class: "green" %></h3>
+</div>

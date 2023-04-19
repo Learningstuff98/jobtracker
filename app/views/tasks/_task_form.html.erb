@@ -1,0 +1,24 @@
+<div class="container green">
+  <div class="box col-8">
+    <h2 class="text-center"><%= title %></h2>
+    <br/>
+    <h3><%= f.input :title %></h3>
+    <br/>
+    <h3><%= f.input :date %></h3>
+    <br/>
+    <h3><%= f.input :time %></h3>
+    <br/>
+    <h3><%= f.input :location %></h3>
+    <br/>
+    <h3>Notes</h3>
+    <div class="application-notes-input text-center">
+      <%= f.rich_text_area :content %>
+    </div>
+    <br/>
+    <div class="text-center">
+      <%= f.submit "#{button_label}", class: "btn btn-success" %>
+    </div>
+  </div>
+</div>
+
+<br/><br/><br/>
