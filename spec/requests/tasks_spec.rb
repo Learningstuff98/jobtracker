@@ -50,6 +50,14 @@ RSpec.describe "Tasks", type: :request do
       end
     end
 
+    describe "GET #edit" do
+      it "loads the page" do
+        task = FactoryBot.create(:task)
+        get edit_task_path(task)
+        expect(response).to be_successful
+      end
+    end
+
     describe "DELETE #destroy" do
       it "deletes tasks" do
         task = FactoryBot.create(:task)
