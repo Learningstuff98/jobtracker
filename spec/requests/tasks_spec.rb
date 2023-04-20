@@ -22,7 +22,7 @@ RSpec.describe "Tasks", type: :request do
     end
 
     describe "POST #create" do
-      it "can create tasks" do
+      it "can create tasks", :aggregate_failures do
         post tasks_path(
           user_id: @user.id,
           task: {
@@ -70,7 +70,7 @@ RSpec.describe "Tasks", type: :request do
     end
 
     describe "PATCH #update" do
-      it "updates tasks" do
+      it "updates tasks", :aggregate_failures do
         task = FactoryBot.create(:task)
         patch task_path(
           id: task.id,
@@ -103,7 +103,7 @@ RSpec.describe "Tasks", type: :request do
     end
 
     describe "DELETE #destroy" do
-      it "deletes tasks" do
+      it "deletes tasks", :aggregate_failures do
         task = FactoryBot.create(:task)
         delete task_path(task)
         expect(response).to have_http_status(:found)
