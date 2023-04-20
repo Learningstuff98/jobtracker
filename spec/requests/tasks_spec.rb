@@ -40,6 +40,17 @@ RSpec.describe "Tasks", type: :request do
         expect(task.time).to eq "1:00pm"
         expect(task.location).to eq "some address"
       end
+
+      it "doesn't create invalid tasks", :aggregate_failures do
+        post tasks_path(
+          user_id: @user.id,
+          task: {
+            title: ""
+          }
+        )
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(Task.count).to eq 0
+      end
     end
 
     describe "GET #show" do
@@ -76,6 +87,18 @@ RSpec.describe "Tasks", type: :request do
         expect(task.date).to eq "11/30/2025 EDIT"
         expect(task.time).to eq "1:00pm EDIT"
         expect(task.location).to eq "some address EDIT"
+      end
+
+      it "doesn't allow for invalid updates", :aggregate_failures do
+        task = FactoryBot.create(:task)
+        patch task_path(
+          id: task.id,
+          task: {
+            title: ""
+          }
+        )
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(Task.first.title).to eq "go to the dentist"
       end
     end
 
