@@ -111,4 +111,48 @@ RSpec.describe "Tasks", type: :request do
       end
     end
   end
+
+  context "while logged in as a foreign user" do
+    before do
+      @user = FactoryBot.create(:user)
+      @task = FactoryBot.create(:task)
+      @user2 = FactoryBot.create(:user)
+      sign_in(@user2)
+    end
+
+    describe "GET #show" do
+      it "should deny access" do
+        get task_path(@task)
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    describe "GET #edit" do
+      it "should deny access" do
+        get edit_task_path(@task)
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    describe "PATCH #update" do
+      it "should deny access", :aggregate_failures do
+        patch task_path(
+          id: @task.id,
+          task: {
+            title: "some troll edit"
+          }
+        )
+        expect(response).to have_http_status(:forbidden)
+        expect(Task.first.title).to eq "go to the dentist"
+      end
+    end
+
+    describe "DELETE #destroy" do
+      it "should deny access", :aggregate_failures do
+        delete task_path(@task)
+        expect(response).to have_http_status(:forbidden)
+        expect(Task.count).to eq 1
+      end
+    end
+  end
 end

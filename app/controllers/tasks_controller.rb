@@ -20,14 +20,18 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
+    authorize_user(@task)
   end
 
   def edit
     @task = Task.find(params[:id])
+    authorize_user(@task)
   end
 
   def update
     @task = Task.find(params[:id])
+    return unless authorize_user(@task)
+
     if @task.update(task_params)
       redirect_to task_path(@task)
     else
@@ -37,6 +41,8 @@ class TasksController < ApplicationController
 
   def destroy
     @task = Task.find(params[:id])
+    return unless authorize_user(@task)
+
     @task.destroy
     redirect_to tasks_path
   end
@@ -45,5 +51,14 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :date, :time, :location, :status, :content)
+  end
+
+  def authorize_user(task)
+    if current_user != task.user
+      render plain: 'Access Denied', status: :forbidden
+      false
+    else
+      true
+    end
   end
 end
