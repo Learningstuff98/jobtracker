@@ -58,6 +58,27 @@ RSpec.describe "Tasks", type: :request do
       end
     end
 
+    describe "PATCH #update" do
+      it "updates tasks" do
+        task = FactoryBot.create(:task)
+        patch task_path(
+          id: task.id,
+          task: {
+            title: "go to the dentist EDIT",
+            date: "11/30/2025 EDIT",
+            time: "1:00pm EDIT",
+            location: "some address EDIT"
+          }
+        )
+        expect(response).to have_http_status(:found)
+        task = Task.first
+        expect(task.title).to eq "go to the dentist EDIT"
+        expect(task.date).to eq "11/30/2025 EDIT"
+        expect(task.time).to eq "1:00pm EDIT"
+        expect(task.location).to eq "some address EDIT"
+      end
+    end
+
     describe "DELETE #destroy" do
       it "deletes tasks" do
         task = FactoryBot.create(:task)
