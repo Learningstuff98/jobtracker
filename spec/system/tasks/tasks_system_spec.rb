@@ -45,5 +45,15 @@ RSpec.describe "Tasks CRUD operations", type: :system do
       expect(page).to have_content "some address EDIT"
       expect(page).to have_content "relevent info EDIT"
     end
+
+    it "can delete tasks", :aggregate_failures do
+      visit task_path(@task)
+      accept_confirm do
+        click_on "Delete"
+      end
+
+      expect(page).to have_content "Add a new task"
+      expect(page).not_to have_content "go to the dentist"
+    end
   end
 end
