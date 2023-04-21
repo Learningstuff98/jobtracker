@@ -26,5 +26,24 @@ RSpec.describe "Tasks CRUD operations", type: :system do
       expect(page).to have_content "middle of nowhere"
       expect(page).to have_content "some relevent info"
     end
+
+    it "can edit tasks", :aggregate_failures do
+      visit task_path(@task)
+      click_link "Edit"
+
+      expect(page).to have_content "Edit task Info"
+      fill_in("Title", with: "go to the dentist EDIT")
+      fill_in("Date", with: "12/10/3050")
+      fill_in("Time", with: "11:00AM")
+      fill_in("Location", with: "some address EDIT")
+      find(".trix-content").set("relevent info EDIT")
+      click_on "Update"
+
+      expect(page).to have_content "go to the dentist EDIT"
+      expect(page).to have_content "12/10/3050"
+      expect(page).to have_content "11:00AM"
+      expect(page).to have_content "some address EDIT"
+      expect(page).to have_content "relevent info EDIT"
+    end
   end
 end
