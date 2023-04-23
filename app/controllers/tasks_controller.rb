@@ -2,7 +2,9 @@ class TasksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @tasks = current_user.tasks
+    @incomplete_tasks = Task.incomplete_tasks(current_user)
+    @in_progress_tasks = Task.in_progress_tasks(current_user)
+    @completed_tasks = Task.completed_tasks(current_user)
   end
 
   def new
