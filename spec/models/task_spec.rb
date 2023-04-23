@@ -1,6 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
+  context "scopes" do
+    before do
+      @user = FactoryBot.create(:user)
+      FactoryBot.create(:task, status: "Incomplete")
+      FactoryBot.create(:task, status: "In progress")
+      FactoryBot.create(:task, status: "Done")
+    end
+
+    describe "completed_tasks" do
+      it "only returns a users completed tasks", :aggregate_failures do
+        user2 = FactoryBot.create(:user)
+        FactoryBot.create(:task, status: "Done", user_id: user2.id)
+
+        completed_tasks = Task.completed_tasks(@user)
+        expect(completed_tasks.count).to eq 1
+        expect(completed_tasks.first.status).to eq "Done"
+        expect(completed_tasks.first.user_id).to eq @user.id
+      end
+    end
+  end
+
   context "validations" do
     before do
       @user = FactoryBot.create(:user)
