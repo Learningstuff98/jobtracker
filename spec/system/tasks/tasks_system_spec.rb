@@ -55,5 +55,16 @@ RSpec.describe "Tasks CRUD operations", type: :system do
       expect(page).to have_content "Add a new task"
       expect(page).not_to have_content "go to the dentist"
     end
+
+    it "displays the correct error message when an invalid status value is used" do
+      visit task_path(@task)
+      click_link "Edit"
+
+      expect(page).to have_content "Edit task Info"
+      fill_in("Status", with: "apples")
+      click_on "Update"
+
+      expect(page).to have_content "Status must be one of the following: Incomplete, In progress or Done"
+    end
   end
 end
