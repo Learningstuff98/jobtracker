@@ -20,6 +20,18 @@ RSpec.describe Task, type: :model do
         expect(completed_tasks.first.user_id).to eq @user.id
       end
     end
+
+    describe "incomplete_tasks" do
+      it "only returns a users incomplete tasks", :aggregate_failures do
+        user2 = FactoryBot.create(:user)
+        FactoryBot.create(:task, status: "Incomplete", user_id: user2.id)
+
+        incomplete_tasks = Task.incomplete_tasks(@user)
+        expect(incomplete_tasks.count).to eq 1
+        expect(incomplete_tasks.first.status).to eq "Incomplete"
+        expect(incomplete_tasks.first.user_id).to eq @user.id
+      end
+    end
   end
 
   context "validations" do
