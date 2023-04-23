@@ -32,6 +32,18 @@ RSpec.describe Task, type: :model do
         expect(incomplete_tasks.first.user_id).to eq @user.id
       end
     end
+
+    describe "in_progress_tasks" do
+      it "only returns a users tasks that are in progress" do
+        user2 = FactoryBot.create(:user)
+        FactoryBot.create(:task, status: "In progress", user_id: user2.id)
+
+        in_progress_tasks = Task.in_progress_tasks(@user)
+        expect(in_progress_tasks.count).to eq 1
+        expect(in_progress_tasks.first.status).to eq "In progress"
+        expect(in_progress_tasks.first.user_id).to eq @user.id
+      end
+    end
   end
 
   context "validations" do
