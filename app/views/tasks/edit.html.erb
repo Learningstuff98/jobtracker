@@ -1,0 +1,7 @@
+<%= simple_form_for @task, url: task_path(@task) do |f| %>
+  <%= render partial: "task_form", locals: {
+    f: f,
+    title: "Edit task Info",
+    button_label: "Update"
+  } %>
+<% end %>

@@ -1,0 +1,37 @@
+<div class="green page-content">
+  <h3><%= link_to "Home", root_path, class: "green" %></h3>
+  <h3><%= link_to "Add a new task", new_task_path, class: "green" %></h3>
+
+  <br/>
+
+  <div class="box stage-width">
+    <h2>Incomplete</h2>
+    <% @incomplete_tasks.each do |incomplete_task| %>
+      <h4>
+        <%= link_to "#{incomplete_task.title}", task_path(incomplete_task), class: "green" %>
+      </h4>
+    <% end %>
+  </div>
+
+  <br/>
+
+  <div class="box stage-width">
+    <h2>In progress</h2>
+    <% @in_progress_tasks.each do |in_progress_task| %>
+      <h4>
+        <%= link_to "#{in_progress_task.title}", task_path(in_progress_task), class: "green" %>
+      </h4>
+    <% end %>
+  </div>
+
+  <br/>
+
+  <div class="box stage-width">
+    <h2>Done</h2>
+    <% @completed_tasks.each do |completed_task| %>
+      <h4>
+        <%= link_to "#{completed_task.title}", task_path(completed_task), class: "green" %>
+      </h4>
+    <% end %>
+  </div>
+</div>

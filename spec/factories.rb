@@ -15,4 +15,13 @@ FactoryBot.define do
     tech_job { true }
     remote { true }
   end
+
+  factory :task do
+    user_id { User.first.id }
+    title { "go to the dentist" }
+    date { "11/30/2025" }
+    time { "1:00pm" }
+    location { "some address" }
+    content { "relevent info" }
+  end
 end
