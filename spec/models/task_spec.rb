@@ -52,6 +52,10 @@ RSpec.describe Task, type: :model do
       @task = FactoryBot.create(:task)
     end
 
+    it "title can't be blank" do
+      expect(@task.update(title: "")).to eq false
+    end
+
     it "status can only be one of three options: Incomplete, In progress or Done", :aggregate_failures do
       expect(@task.update(status: "Incomplete")).to eq true
       expect(@task.update(status: "In progress")).to eq true
