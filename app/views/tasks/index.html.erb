@@ -4,34 +4,13 @@
 
   <br/>
 
-  <div class="box stage-width">
-    <h2>Incomplete</h2>
-    <% @incomplete_tasks.each do |incomplete_task| %>
-      <h4>
-        <%= link_to "#{incomplete_task.title}", task_path(incomplete_task), class: "green" %>
-      </h4>
-    <% end %>
-  </div>
+  <%= render partial: "stage", locals: { title: "Incomplete", tasks: @incomplete_tasks } %>
 
   <br/>
 
-  <div class="box stage-width">
-    <h2>In progress</h2>
-    <% @in_progress_tasks.each do |in_progress_task| %>
-      <h4>
-        <%= link_to "#{in_progress_task.title}", task_path(in_progress_task), class: "green" %>
-      </h4>
-    <% end %>
-  </div>
+  <%= render partial: "stage", locals: { title: "In progress", tasks: @in_progress_tasks } %>
 
   <br/>
 
-  <div class="box stage-width">
-    <h2>Done</h2>
-    <% @completed_tasks.each do |completed_task| %>
-      <h4>
-        <%= link_to "#{completed_task.title}", task_path(completed_task), class: "green" %>
-      </h4>
-    <% end %>
-  </div>
+  <%= render partial: "stage", locals: { title: "Done", tasks: @completed_tasks } %>
 </div>

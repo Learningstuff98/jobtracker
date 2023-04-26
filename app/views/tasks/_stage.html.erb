@@ -1,0 +1,8 @@
+<div class="box stage-width">
+  <h2><%= title %></h2>
+  <% tasks.each do |task| %>
+    <h4>
+      <%= link_to "#{task.title}", task_path(task), class: "green" %>
+    </h4>
+  <% end %>
+</div>
