@@ -66,5 +66,50 @@ RSpec.describe "Tasks CRUD operations", type: :system do
 
       expect(page).to have_content "Status must be one of the following: Incomplete, In progress or Done"
     end
+
+    it "displays tasks in the correct stage on the index page", :aggregate_failures do
+      visit tasks_path
+      within(".incomplete") do
+        expect(page).to have_content("go to the dentist")
+      end
+
+      within(".in_progress") do
+        expect(page).not_to have_content("go to the dentist")
+      end
+
+      within(".done") do
+        expect(page).not_to have_content("go to the dentist")
+      end
+
+      @task.update(status: "In progress")
+      visit tasks_path
+
+      within(".incomplete") do
+        expect(page).not_to have_content("go to the dentist")
+      end
+
+      within(".in_progress") do
+        expect(page).to have_content("go to the dentist")
+      end
+
+      within(".done") do
+        expect(page).not_to have_content("go to the dentist")
+      end
+
+      @task.update(status: "Done")
+      visit tasks_path
+
+      within(".incomplete") do
+        expect(page).not_to have_content("go to the dentist")
+      end
+
+      within(".in_progress") do
+        expect(page).not_to have_content("go to the dentist")
+      end
+
+      within(".done") do
+        expect(page).to have_content("go to the dentist")
+      end
+    end
   end
 end
