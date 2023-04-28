@@ -56,6 +56,25 @@ RSpec.describe Task, type: :model do
       expect(@task.update(title: "")).to eq false
     end
 
+    it "date has the correct format", :aggregate_failures do
+      expect(@task.update(date: "")).to eq true
+      expect(@task.update(date: "08/15/2023")).to eq true
+
+      expect(@task.update(date: "/15/2023")).to eq false
+      expect(@task.update(date: "08//2023")).to eq false
+      expect(@task.update(date: "08/15/")).to eq false
+
+      expect(@task.update(date: "08!15/2023")).to eq false
+      expect(@task.update(date: "08/15.2023")).to eq false
+      expect(@task.update(date: "08,15?2023")).to eq false
+
+      expect(@task.update(date: "a8/15/2023")).to eq false
+      expect(@task.update(date: "08/1x/2!23")).to eq false
+      expect(@task.update(date: "08/15/202@")).to eq false
+      expect(@task.update(date: "08/1#/2023")).to eq false
+      expect(@task.update(date: "!@/#./%^&*")).to eq false
+    end
+
     it "status can only be one of three options: Incomplete, In progress or Done", :aggregate_failures do
       expect(@task.update(status: "Incomplete")).to eq true
       expect(@task.update(status: "In progress")).to eq true

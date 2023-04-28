@@ -76,7 +76,7 @@ RSpec.describe "Tasks", type: :request do
           id: task.id,
           task: {
             title: "go to the dentist EDIT",
-            date: "11/30/2025 EDIT",
+            date: "11/30/2026",
             time: "1:00pm EDIT",
             location: "some address EDIT"
           }
@@ -84,7 +84,7 @@ RSpec.describe "Tasks", type: :request do
         expect(response).to have_http_status(:found)
         task = Task.first
         expect(task.title).to eq "go to the dentist EDIT"
-        expect(task.date).to eq "11/30/2025 EDIT"
+        expect(task.date).to eq "11/30/2026"
         expect(task.time).to eq "1:00pm EDIT"
         expect(task.location).to eq "some address EDIT"
       end
