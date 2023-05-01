@@ -67,37 +67,29 @@ RSpec.describe "Tasks CRUD operations", type: :system do
       expect(page).to have_content "Status must be one of the following: Incomplete, In progress or Done"
     end
 
-    it "displays the correct error messages when an invalid date value is used", :aggregate_failures do
+    it "displays the correct error message when an invalid date value is used", :aggregate_failures do
       visit edit_task_path(@task)
       expect(page).to have_content "Edit task Info"
 
       fill_in("Date", with: "apples")
       click_on "Update"
 
-      expect(page).to have_content "Date must be 10 characters long or be blank"
-      expect(page).to have_content "Date must have slashes like so XX/XX/XXXX"
-      expect(page).to have_content "Date must have day, month and year as numbers"
+      expect(page).to have_content("Date must have the following format, XX/XX/XXXX with X being a number.", count: 1)
 
       fill_in("Date", with: "10/21/202")
       click_on "Update"
 
-      expect(page).to have_content "Date must be 10 characters long or be blank"
-      expect(page).not_to have_content "Date must have slashes like so XX/XX/XXXX"
-      expect(page).not_to have_content "Date must have day, month and year as numbers"
+      expect(page).to have_content("Date must have the following format, XX/XX/XXXX with X being a number.", count: 1)
 
       fill_in("Date", with: "10!21/2028")
       click_on "Update"
 
-      expect(page).not_to have_content "Date must be 10 characters long or be blank"
-      expect(page).to have_content "Date must have slashes like so XX/XX/XXXX"
-      expect(page).not_to have_content "Date must have day, month and year as numbers"
+      expect(page).to have_content("Date must have the following format, XX/XX/XXXX with X being a number.", count: 1)
 
       fill_in("Date", with: "10/21/20@8")
       click_on "Update"
 
-      expect(page).not_to have_content "Date must be 10 characters long or be blank"
-      expect(page).not_to have_content "Date must have slashes like so XX/XX/XXXX"
-      expect(page).to have_content "Date must have day, month and year as numbers"
+      expect(page).to have_content("Date must have the following format, XX/XX/XXXX with X being a number.", count: 1)
     end
 
     it "displays tasks in the correct stage on the index page", :aggregate_failures do

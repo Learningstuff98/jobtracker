@@ -25,19 +25,21 @@ class Task < ApplicationRecord
     check_for_numbers(date)
   end
 
+  def date_format_error_message
+    "must have the following format, XX/XX/XXXX with X being a number."
+  end
+
   def check_for_numbers(date)
     date.each_with_index do |char, index|
-      if ![2, 5].include?(index) && !char.match?(/[[:digit:]]/)
-        errors.add(:date, "must have day, month and year as numbers")
-      end
+      errors.add(:date, date_format_error_message) if ![2, 5].include?(index) && !char.match?(/[[:digit:]]/)
     end
   end
 
   def check_date_length(date)
-    errors.add(:date, "must be 10 characters long or be blank") if date.length != 10
+    errors.add(:date, date_format_error_message) if date.length != 10
   end
 
   def check_for_slashes(date)
-    errors.add(:date, "must have slashes like so XX/XX/XXXX") if date[2] != "/" || date[5] != "/"
+    errors.add(:date, date_format_error_message) if date[2] != "/" || date[5] != "/"
   end
 end
