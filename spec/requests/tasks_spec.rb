@@ -77,7 +77,7 @@ RSpec.describe "Tasks", type: :request do
           task: {
             title: "go to the dentist EDIT",
             date: "11/30/2026",
-            time: "1:00pm EDIT",
+            time: "11:00pm",
             location: "some address EDIT"
           }
         )
@@ -85,7 +85,7 @@ RSpec.describe "Tasks", type: :request do
         task = Task.first
         expect(task.title).to eq "go to the dentist EDIT"
         expect(task.date).to eq "11/30/2026"
-        expect(task.time).to eq "1:00pm EDIT"
+        expect(task.time).to eq "11:00pm"
         expect(task.location).to eq "some address EDIT"
       end
 

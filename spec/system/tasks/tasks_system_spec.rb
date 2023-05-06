@@ -15,14 +15,14 @@ RSpec.describe "Tasks CRUD operations", type: :system do
       expect(page).to have_content "Task Info"
       fill_in("Title", with: "Go to the dentist")
       fill_in("Date", with: "07/21/2525")
-      fill_in("Time", with: "1:00PM")
+      fill_in("Time", with: "1:00pm")
       fill_in("Location", with: "middle of nowhere")
       find(".trix-content").set("some relevent info")
       click_on "Submit"
 
       expect(page).to have_content "Go to the dentist"
       expect(page).to have_content "07/21/2525"
-      expect(page).to have_content "1:00PM"
+      expect(page).to have_content "1:00pm"
       expect(page).to have_content "middle of nowhere"
       expect(page).to have_content "some relevent info"
     end
@@ -34,14 +34,14 @@ RSpec.describe "Tasks CRUD operations", type: :system do
       expect(page).to have_content "Edit task Info"
       fill_in("Title", with: "go to the dentist EDIT")
       fill_in("Date", with: "12/10/3050")
-      fill_in("Time", with: "11:00AM")
+      fill_in("Time", with: "11:00am")
       fill_in("Location", with: "some address EDIT")
       find(".trix-content").set("relevent info EDIT")
       click_on "Update"
 
       expect(page).to have_content "go to the dentist EDIT"
       expect(page).to have_content "12/10/3050"
-      expect(page).to have_content "11:00AM"
+      expect(page).to have_content "11:00am"
       expect(page).to have_content "some address EDIT"
       expect(page).to have_content "relevent info EDIT"
     end

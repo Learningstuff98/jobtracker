@@ -56,6 +56,57 @@ RSpec.describe Task, type: :model do
       expect(@task.update(title: "")).to eq false
     end
 
+    describe "time has the correct format" do
+      it "is valid with correctly formatted times", :aggregate_failures do
+        expect(@task.update(time: "")).to eq true
+
+        expect(@task.update(time: "1:00pm")).to eq true
+        expect(@task.update(time: "9:00am")).to eq true
+
+        expect(@task.update(time: "11:00am")).to eq true
+        expect(@task.update(time: "10:00pm")).to eq true
+      end
+
+      it "is invalid for incorrectly short formatted times", :aggregate_failures do
+        expect(@task.update(time: "5:00x")).to eq false
+        expect(@task.update(time: "8:00y")).to eq false
+        expect(@task.update(time: "9:00xy")).to eq false
+
+        expect(@task.update(time: "3:00a")).to eq false
+        expect(@task.update(time: "9:00m")).to eq false
+        expect(@task.update(time: "2:00mp")).to eq false
+        expect(@task.update(time: "7:00ma")).to eq false
+
+        expect(@task.update(time: "3?30am")).to eq false
+        expect(@task.update(time: "4^45pm")).to eq false
+
+        expect(@task.update(time: "7:weam")).to eq false
+        expect(@task.update(time: "}:00pm")).to eq false
+        expect(@task.update(time: "(:^#pm")).to eq false
+        expect(@task.update(time: "awful time")).to eq false
+      end
+
+      it "is invalid for incorrectly long formatted times", :aggregate_failures do
+        expect(@task.update(time: "10:00a")).to eq false
+        expect(@task.update(time: "11:00z")).to eq false
+        expect(@task.update(time: "12:00az")).to eq false
+
+        expect(@task.update(time: "10:00a")).to eq false
+        expect(@task.update(time: "11:00p")).to eq false
+        expect(@task.update(time: "12:00m")).to eq false
+        expect(@task.update(time: "12:00ma")).to eq false
+        expect(@task.update(time: "10:00mp")).to eq false
+
+        expect(@task.update(time: "11/00pm")).to eq false
+        expect(@task.update(time: "12&00am")).to eq false
+
+        expect(@task.update(time: "12:0upm")).to eq false
+        expect(@task.update(time: "@$:00am")).to eq false
+        expect(@task.update(time: "%^:&*pm")).to eq false
+        expect(@task.update(time: "its time to say hello world")).to eq false
+      end
+    end
+
     it "date has the correct format", :aggregate_failures do
       expect(@task.update(date: "")).to eq true
       expect(@task.update(date: "08/15/2023")).to eq true
