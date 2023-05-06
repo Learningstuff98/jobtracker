@@ -67,6 +67,18 @@ RSpec.describe "Tasks CRUD operations", type: :system do
       expect(page).to have_content "Status must be one of the following: Incomplete, In progress or Done"
     end
 
+    it "displays the correct error message when an invalid time value is used", :aggregate_failures do
+      visit edit_task_path(@task)
+      expect(page).to have_content "Edit task Info"
+
+      fill_in("Time", with: "Hello World")
+      click_on "Update"
+
+      expect(page).to have_content(
+        "Time must follow one of two formats, X:XX or XX:XX, with X being a number, followed by am or pm."
+      )
+    end
+
     it "displays the correct error message when an invalid date value is used", :aggregate_failures do
       visit edit_task_path(@task)
       expect(page).to have_content "Edit task Info"
