@@ -148,5 +148,38 @@ RSpec.describe "Tasks CRUD operations", type: :system do
         expect(page).to have_content("go to the dentist")
       end
     end
+
+    it "displays upcoming appointments on the index page", :aggregate_failures do
+      @task.update(status: "Incomplete")
+      visit tasks_path
+
+      expect(page).to have_content("Upcoming Appointments")
+      expect(page).to have_content("11/30/2025")
+      expect(page).to have_content("1:00pm")
+      within(".appointments") do
+        expect(page).to have_content("go to the dentist")
+      end
+      expect(page).not_to have_content("No upcoming appointments")
+
+      @task.update(status: "Done")
+      visit tasks_path
+
+      expect(page).not_to have_content("Upcoming Appointments")
+      expect(page).not_to have_content("11/30/2025")
+      expect(page).not_to have_content("1:00pm")
+      within(".appointments") do
+        expect(page).not_to have_content("go to the dentist")
+      end
+      expect(page).to have_content("No upcoming appointments")
+
+      @task.update(status: "Incomplete", date: "", time: "")
+      visit tasks_path
+
+      expect(page).not_to have_content("Upcoming Appointments")
+      within(".appointments") do
+        expect(page).not_to have_content("go to the dentist")
+      end
+      expect(page).to have_content("No upcoming appointments")
+    end
   end
 end
