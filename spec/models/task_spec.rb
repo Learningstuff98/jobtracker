@@ -1,6 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
+  context "methods" do
+    before do
+      @user = FactoryBot.create(:user)
+      FactoryBot.create(:task, status: "Incomplete")
+      FactoryBot.create(:task, status: "In progress")
+      FactoryBot.create(:task, status: "Done")
+    end
+
+    describe "tasks_with_appointments" do
+      it "only returns a users incomplete tasks that have appointments schedualed", :aggregate_failures do
+        user2 = FactoryBot.create(:user)
+        FactoryBot.create(:task, status: "Incomplete", date: "12/06/2023", time: "7:00am", user_id: user2.id)
+        FactoryBot.create(:task, status: "Incomplete", date: "", time: "", user_id: @user.id)
+
+        tasks_with_appointments = Task.tasks_with_appointments(@user)
+        expect(tasks_with_appointments.count).to eq 1
+        expect(tasks_with_appointments.first.status).to eq "Incomplete"
+        expect(tasks_with_appointments.first.date).to eq "11/30/2025"
+        expect(tasks_with_appointments.first.time).to eq "1:00pm"
+        expect(tasks_with_appointments.first.user_id).to eq @user.id
+      end
+    end
+  end
+
   context "scopes" do
     before do
       @user = FactoryBot.create(:user)

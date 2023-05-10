@@ -4,6 +4,31 @@
 
   <br/>
 
+  <div class="appointments">
+    <% if @tasks_with_appointments.empty? %>
+      <h3>No upcoming appointments</h3>
+    <% else %>
+      <h3>Upcoming Appointments</h3>
+      <br/>
+      <table>
+        <tr>
+          <th>Title</th>
+          <th>Date</th>
+          <th>Time</th>
+        </tr>
+        <% @tasks_with_appointments.each do |task_with_appointment| %>
+          <tr>
+            <td><%= task_with_appointment.title %></td>
+            <td><%= task_with_appointment.date %></td>
+            <td><%= task_with_appointment.time %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+  </div>
+
+  <br/>
+
   <div class="incomplete">
     <%= render partial: "stage", locals: { title: "Incomplete", tasks: @incomplete_tasks } %>
   </div>

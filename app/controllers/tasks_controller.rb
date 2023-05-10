@@ -5,6 +5,7 @@ class TasksController < ApplicationController
     @incomplete_tasks = Task.incomplete_tasks(current_user)
     @in_progress_tasks = Task.in_progress_tasks(current_user)
     @completed_tasks = Task.completed_tasks(current_user)
+    @tasks_with_appointments = Task.tasks_with_appointments(current_user)
   end
 
   def new

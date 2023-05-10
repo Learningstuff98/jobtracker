@@ -15,6 +15,10 @@ class Task < ApplicationRecord
   scope :in_progress_tasks, ->(user) { where(status: "In progress", user_id: user.id) }
   scope :completed_tasks, ->(user) { where(status: "Done", user_id: user.id) }
 
+  def self.tasks_with_appointments(user)
+    user.tasks.select { |task| task.status == "Incomplete" && !task.date.empty? && !task.time.empty? }
+  end
+
   private
 
   def valid_time_format?
