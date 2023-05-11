@@ -6,21 +6,20 @@
 
   <div class="appointments">
     <% if @tasks_with_appointments.empty? %>
-      <h3>No upcoming appointments</h3>
+      No upcoming appointments
     <% else %>
-      <h3>Upcoming Appointments</h3>
-      <br/>
+      Upcoming Appointments
       <table>
         <tr>
-          <th>Title</th>
+          <th class="table-element">Title</th>
           <th>Date</th>
           <th>Time</th>
         </tr>
         <% @tasks_with_appointments.each do |task_with_appointment| %>
           <tr>
-            <td><%= task_with_appointment.title %></td>
-            <td><%= task_with_appointment.date %></td>
-            <td><%= task_with_appointment.time %></td>
+            <td class="table-element"><%= link_to task_with_appointment.title, task_path(task_with_appointment), class: "green" %></td>
+            <td class="table-element"><%= task_with_appointment.date %></td>
+            <td class="table-element"><%= task_with_appointment.time %></td>
           </tr>
         <% end %>
       </table>
